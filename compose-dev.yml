@@ -1,0 +1,27 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      -   ./data:/home
+    env_file:
+      - .env
+      - .database.env
+  mysql:
+    image: mysql:9.1.0
+    env_file:
+      -   .database.env
+  redis:
+    image: redis:7.4.1
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8000:80
+    environment:
+      - PMA_ARBITRARY=1
+
